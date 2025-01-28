@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PizzaIngredient
+struct PizzaIngredient: Codable
 {
     let name: IngredientName
     let cost: Int

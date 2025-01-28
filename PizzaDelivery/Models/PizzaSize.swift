@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PizzaSize
+struct PizzaSize: Codable
 {
     let name: Size
     let price: Int

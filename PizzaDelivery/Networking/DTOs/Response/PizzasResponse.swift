@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PizzasResponse
+struct PizzasResponse: Codable
 {
     let success: Bool
     let reason: String?

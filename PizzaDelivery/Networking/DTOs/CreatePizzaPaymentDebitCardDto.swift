@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CreatePizzaPaymentDebitCardDto
+struct CreatePizzaPaymentDebitCardDto: Codable
 {
     let pan: String
     let expireDate: String

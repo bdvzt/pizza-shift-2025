@@ -12,4 +12,5 @@ enum NetworkError: Error
     case invalidURL
     case invalidResponse
     case invalidData
+    case requestFailed
 }

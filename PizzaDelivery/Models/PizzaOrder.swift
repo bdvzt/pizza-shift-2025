@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PizzaOrder
+struct PizzaOrder: Codable
 {
     let pizzas: [OrderedPizza]
     let person: PizzaPerson

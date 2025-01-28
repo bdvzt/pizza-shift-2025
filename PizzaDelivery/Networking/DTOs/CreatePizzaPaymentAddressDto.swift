@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CreatePizzaPaymentAddressDto
+struct CreatePizzaPaymentAddressDto: Codable
 {
     let street: String
     let house: String

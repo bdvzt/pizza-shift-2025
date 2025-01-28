@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CancelPizzaOrderDto
+struct CancelPizzaOrderDto: Codable
 {
     let orderId: String
 }

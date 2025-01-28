@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PizzasResponse: Codable
+struct PizzasResponse: Decodable
 {
     let success: Bool
     let reason: String?

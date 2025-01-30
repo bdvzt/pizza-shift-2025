@@ -10,10 +10,6 @@ import Foundation
 enum CatalogEndPoint: EndPointType {
     case getCatalog
 
-    var baseURL: URL {
-        return URL(string: Const.baseUrl)!
-    }
-
     var path: String {
         switch self {
         case .getCatalog:

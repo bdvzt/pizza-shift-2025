@@ -12,28 +12,13 @@ protocol CatalogRepository {
 }
 
 class CatalogRepositoryImpl: CatalogRepository {
-    private let router = Router<CatalogEndPoint>()
+    private let networkService: NetworkServiceProtocol
+    
+    init(networkService: NetworkServiceProtocol) {
+        self.networkService = networkService
+    }
     
     func fetchCatalog() async throws -> PizzasResponse {
-        return try await withCheckedThrowingContinuation { continuation in
-            router.request(.getCatalog) { data, response, error in
-                if let error = error {
-                    continuation.resume(throwing: error)
-                    return
-                }
-
-                guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200, let data = data else {
-                    continuation.resume(throwing: NetworkError.invalidResponse)
-                    return
-                }
-
-                do {
-                    let pizzasResponse = try JSONDecoder().decode(PizzasResponse.self, from: data)
-                    continuation.resume(returning: pizzasResponse)
-                } catch {
-                    continuation.resume(throwing: NetworkError.invalidData)
-                }
-            }
-        }
+        return try await networkService.request(endPoint: CatalogEndPoint.getCatalog, authorized: false)
     }
 }

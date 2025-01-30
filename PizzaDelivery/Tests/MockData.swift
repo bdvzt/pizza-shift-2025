@@ -47,4 +47,9 @@ struct MockData {
             )
         ]
     )
+    
+    static let signInDto = SignInDto(
+        phone: "89244527680",
+        code: 276920
+    )
 }

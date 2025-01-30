@@ -10,10 +10,6 @@ import Foundation
 enum PaymentEndPoint: EndPointType {
     case pay(CreatePizzaPaymentDto)
     
-    var baseURL: URL {
-        return URL(string: Const.baseUrl)!
-    }
-    
     var path: String {
         switch self {
         case .pay:

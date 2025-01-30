@@ -18,9 +18,7 @@ class PayForPizzaUseCaseImpl: PayForPizzaUseCase {
         self.repository = repository
     }
     
-    let paymentDto = MockData.testPaymentDto
-    
     func execute(order: CreatePizzaPaymentDto) async throws -> PizzaPaymentResponse {
-        return try await repository.pay(order: paymentDto)
+        return try await repository.pay(order: order)
     }
 }

@@ -12,23 +12,36 @@ class ViewController: UIViewController {
     
     private let getCatalogUseCase: GetCatalogUseCase
     private let payForPizzaUseCase: PayForPizzaUseCase
-//    private let signInUseCase: SignInUseCase
-
+    private let signInUseCase: UserUseCase
+    
     init(
-        getCatalogUseCase: GetCatalogUseCase = GetCatalogUseCaseImpl(repository: CatalogRepositoryImpl()),
-        payForPizzaUseCase: PayForPizzaUseCase = PayForPizzaUseCaseImpl(repository: PaymentRepositoryImpl())
-//        signInUseCase: SignInUseCase = SignInUseCaseImpl(repository: AuthRepositoryImpl())
+        getCatalogUseCase: GetCatalogUseCase = GetCatalogUseCaseImpl(
+            repository: CatalogRepositoryImpl(
+                networkService: NetworkService(tokenStorage: UserDefaultsStorage())
+            )
+        ),
+        payForPizzaUseCase: PayForPizzaUseCase = PayForPizzaUseCaseImpl(
+            repository: PaymentRepositoryImpl(
+                networkService: NetworkService(tokenStorage: UserDefaultsStorage())
+            )
+        ),
+        signInUseCase: UserUseCase = UserUseCaseImpl(
+            repository: UserRepositoryImpl(
+                networkService: NetworkService(tokenStorage: UserDefaultsStorage()),
+                tokenStorage: UserDefaultsStorage()
+            )
+        )
     ) {
         self.getCatalogUseCase = getCatalogUseCase
         self.payForPizzaUseCase = payForPizzaUseCase
-//        self.signInUseCase = signInUseCase
+        self.signInUseCase = signInUseCase
         super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -36,12 +49,12 @@ class ViewController: UIViewController {
     
     private func setupUI() {
         view.backgroundColor = .white
-
+        
         let getPizzasButton = createButton(title: "Get pizzas", action: #selector(fetchPizzasButtonTapped))
         let payButton = createButton(title: "Pay", action: #selector(payButtonTapped))
-//        let signInButton = createButton(title: "Sign in", action: #selector(signInButtonTapped))
+        let signInButton = createButton(title: "Sign in", action: #selector(signInButtonTapped))
         
-        let stackView = UIStackView(arrangedSubviews: [getPizzasButton, payButton])
+        let stackView = UIStackView(arrangedSubviews: [getPizzasButton, payButton, signInButton])
         stackView.axis = .vertical
         stackView.spacing = 16
         stackView.alignment = .center
@@ -76,9 +89,9 @@ class ViewController: UIViewController {
         Task { await payForPizzas() }
     }
     
-//    @objc private func signInButtonTapped() {
-//        Task { await signIn() }
-//    }
+    @objc private func signInButtonTapped() {
+        Task { await signIn() }
+    }
     
     private func getPizzas() async {
         do {
@@ -98,14 +111,14 @@ class ViewController: UIViewController {
         }
     }
     
-//    private func signIn() async {
-//        do {
-//            let signInResponse = try await signInUseCase.execute()
-//            print(signInResponse)
-//        } catch {
-//            print("Sign in error: \(error)")
-//        }
-//    }
+    private func signIn() async {
+        do {
+            let signInResponse = try await signInUseCase.execute(credentials: MockData.signInDto)
+            print(signInResponse)
+        } catch {
+            print("Sign in error: \(error)")
+        }
+    }
 }
 
 #Preview {

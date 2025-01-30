@@ -7,12 +7,20 @@
 
 import Foundation
 
-public enum NetworkError: String, Error
+public enum NetworkError: Error
 {
-    case parametersNil = "Parameters were nil."
-    case encodingFailed = "Parameter encoding failed."
-    case missingURL = "URL is nil."
-    case invalidURL = "URL is invalid."
-    case invalidResponse = "Response is invalid"
-    case invalidData = "Data is invalid"
+    case wrongURL
+    case invalidResponse
+    case invalidData
+    case wrongOtp
+    case decodingError
+    case encodingError
+    
+    case methodNotAllowed
+    case badRequest
+    case unauthorized
+    case forbidden
+    case notFound
+    case serverError
+    case unknown
 }

@@ -1,5 +1,5 @@
 //
-//  PaymentRepository.swift
+//  PizzaRepository.swift
 //  PizzaDelivery
 //
 //  Created by Zayata Budaeva on 29.01.2025.
@@ -7,11 +7,12 @@
 
 import Foundation
 
-protocol PaymentRepository {
+protocol PizzaRepository {
     func pay(order: CreatePizzaPaymentDto) async throws -> PizzaPaymentResponse
+    func getOrders() async throws -> PizzaOrdersResponse
 }
 
-class PaymentRepositoryImpl: PaymentRepository {
+class PizzaRepositoryImpl: PizzaRepository {
     private let networkService: NetworkServiceProtocol
     
     init(networkService: NetworkServiceProtocol) {
@@ -20,5 +21,9 @@ class PaymentRepositoryImpl: PaymentRepository {
     
     func pay(order: CreatePizzaPaymentDto) async throws -> PizzaPaymentResponse {
         return try await networkService.request(endPoint: PaymentEndPoint.pay(order), authorized: false)
+    }
+    
+    func getOrders() async throws -> PizzaOrdersResponse {
+        return try await networkService.request(endPoint: OrdersEndPoint.orders, authorized: true)
     }
 }

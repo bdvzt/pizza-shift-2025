@@ -12,9 +12,9 @@ protocol PayForPizzaUseCase {
 }
 
 class PayForPizzaUseCaseImpl: PayForPizzaUseCase {
-    private let repository: PaymentRepository
+    private let repository: PizzaRepository
 
-    init(repository: PaymentRepository) {
+    init(repository: PizzaRepository) {
         self.repository = repository
     }
     

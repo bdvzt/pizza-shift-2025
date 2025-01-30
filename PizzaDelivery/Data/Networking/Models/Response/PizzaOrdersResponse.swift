@@ -11,6 +11,5 @@ struct PizzaOrdersResponse: Decodable
 {
     let success: Bool
     let reason: String?
-    let order: [PizzaOrder]
-    
+    let orders: [PizzaOrder]
 }

@@ -9,6 +9,7 @@ import Foundation
 
 protocol CatalogRepository {
     func fetchCatalog() async throws -> PizzasResponse
+    
 }
 
 class CatalogRepositoryImpl: CatalogRepository {

@@ -15,6 +15,7 @@ class ViewController: UIViewController {
     private let signInUseCase: SignInUseCase
     private let getSessionUseCase: GetSessionUseCase
     private let updateProfileUseCase: UpdateProfileUseCase
+    private let getOrdersUseCase: GetOrdersUseCase
     
     init(
         getCatalogUseCase: GetCatalogUseCase = GetCatalogUseCaseImpl(
@@ -23,7 +24,7 @@ class ViewController: UIViewController {
             )
         ),
         payForPizzaUseCase: PayForPizzaUseCase = PayForPizzaUseCaseImpl(
-            repository: PaymentRepositoryImpl(
+            repository: PizzaRepositoryImpl(
                 networkService: NetworkService(tokenStorage: UserDefaultsStorage())
             )
         ),
@@ -44,6 +45,11 @@ class ViewController: UIViewController {
                 networkService: NetworkService(tokenStorage: UserDefaultsStorage()),
                 tokenStorage: UserDefaultsStorage()
             )
+        ),
+        getOrdersUseCase: GetOrdersUseCase = GetOrdersUseCaseImpl(
+            repository: PizzaRepositoryImpl(
+                networkService: NetworkService(tokenStorage: UserDefaultsStorage())
+            )
         )
     ) {
         self.getCatalogUseCase = getCatalogUseCase
@@ -51,6 +57,7 @@ class ViewController: UIViewController {
         self.signInUseCase = signInUseCase
         self.getSessionUseCase = getSessionUseCase
         self.updateProfileUseCase = updateProfileUseCase
+        self.getOrdersUseCase = getOrdersUseCase
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -71,8 +78,9 @@ class ViewController: UIViewController {
         let signInButton = createButton(title: "Sign in", action: #selector(signInButtonTapped))
         let getSessionButton = createButton(title: "Get Session", action: #selector(getSessionButtonTapped))
         let updateProfileButton = createButton(title: "Update Profile", action: #selector(updateProfileButtonTapped))
+        let getOrdersButton = createButton(title: "Get Orders", action: #selector(getOrdersButtonTapped))
         
-        let stackView = UIStackView(arrangedSubviews: [getPizzasButton, payButton, signInButton, getSessionButton, updateProfileButton])
+        let stackView = UIStackView(arrangedSubviews: [getPizzasButton, payButton, signInButton, getSessionButton, updateProfileButton, getOrdersButton])
         stackView.axis = .vertical
         stackView.spacing = 16
         stackView.alignment = .center
@@ -119,6 +127,10 @@ class ViewController: UIViewController {
         Task { await updateProfile() }
     }
     
+    @objc private func getOrdersButtonTapped() {
+        Task { await getOrders() }
+    }
+    
     private func getPizzas() async {
         do {
             let pizzasResponse = try await getCatalogUseCase.execute()
@@ -161,6 +173,15 @@ class ViewController: UIViewController {
             print(updateResponse)
         } catch {
             print("Profile update error: \(error)")
+        }
+    }
+    
+    private func getOrders() async {
+        do {
+            let ordersResponse = try await getOrdersUseCase.execute()
+            print("Orders: \(ordersResponse)")
+        } catch {
+            print("Error fetching orders: \(error)")
         }
     }
 }

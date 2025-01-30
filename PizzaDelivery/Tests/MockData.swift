@@ -50,6 +50,17 @@ struct MockData {
     
     static let signInDto = SignInDto(
         phone: "89244527680",
-        code: 276920
+        code: 595300
+    )
+    
+    static let updateProfileDto = UpdateProfileDto(
+        profile: UpdateUserDto(
+            firstname: "Заятик",
+            lastname: "Будаева",
+            middlename: "ыАААА",
+            email: "budaevazay@mail.ru",
+            city: "ulan-ude"
+        ),
+        phone: "89244527680"
     )
 }

@@ -7,8 +7,6 @@
 
 import Foundation
 
-import Foundation
-
 protocol NetworkServiceProtocol: AnyObject {
     func request<T: Decodable>(endPoint: EndPointType, authorized: Bool) async throws -> T
 }
@@ -75,7 +73,7 @@ final class NetworkService: NetworkServiceProtocol {
         case .request:
             return request
         case let .requestBody(data):
-            guard endPoint.httpMethod == .post || endPoint.httpMethod == .put else {
+            guard endPoint.httpMethod == .post || endPoint.httpMethod == .patch || endPoint.httpMethod == .put else {
                 throw NetworkError.methodNotAllowed
             }
             request.httpBody = data

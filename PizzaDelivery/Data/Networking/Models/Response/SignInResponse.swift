@@ -11,6 +11,6 @@ struct SignInResponse: Decodable
 {
     let success: Bool
     let reason: String?
-    let user: User
+    let user: UserDto
     let token: String
 }

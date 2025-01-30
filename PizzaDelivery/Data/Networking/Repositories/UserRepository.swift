@@ -9,6 +9,8 @@ import Foundation
 
 protocol UserRepository {
     func signIn(credentials: SignInDto) async throws -> SignInResponse
+    func getSession() async throws -> SessionResponse
+    func updateProfile(updateUserDto: UpdateProfileDto) async throws -> SessionResponse
 }
 
 class UserRepositoryImpl: UserRepository {
@@ -26,6 +28,18 @@ class UserRepositoryImpl: UserRepository {
         tokenStorage.saveToken(signInResponse.token)
         
         return signInResponse
+    }
+    
+    func getSession() async throws -> SessionResponse {
+        let sessionResponse: SessionResponse = try await networkService.request(endPoint: SessionEndPoint.session, authorized: true)
+        
+        return sessionResponse
+    }
+    
+    func updateProfile(updateUserDto: UpdateProfileDto) async throws -> SessionResponse {
+        let updateProfileResponse: SessionResponse = try await networkService.request(endPoint: UpdateProfileEndPoint.update(updateUserDto), authorized: true)
+        
+        return updateProfileResponse
     }
 }
 

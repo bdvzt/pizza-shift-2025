@@ -7,11 +7,11 @@
 
 import Foundation
 
-protocol PayForPizzaUseCase {
+protocol PaymentUseCase {
     func execute(order: CreatePizzaPaymentDto) async throws -> PizzaPaymentResponse
 }
 
-class PayForPizzaUseCaseImpl: PayForPizzaUseCase {
+class PaymentUseCaseImpl: PaymentUseCase {
     private let repository: PizzaRepository
 
     init(repository: PizzaRepository) {

@@ -11,7 +11,7 @@ import SnapKit
 class ViewController: UIViewController {
     
     private let getCatalogUseCase: GetCatalogUseCase
-    private let payForPizzaUseCase: PayForPizzaUseCase
+    private let payForPizzaUseCase: PaymentUseCase
     private let signInUseCase: SignInUseCase
     private let getSessionUseCase: GetSessionUseCase
     private let updateProfileUseCase: UpdateProfileUseCase
@@ -23,7 +23,7 @@ class ViewController: UIViewController {
                 networkService: NetworkService(tokenStorage: UserDefaultsStorage())
             )
         ),
-        payForPizzaUseCase: PayForPizzaUseCase = PayForPizzaUseCaseImpl(
+        payForPizzaUseCase: PaymentUseCase = PaymentUseCaseImpl(
             repository: PizzaRepositoryImpl(
                 networkService: NetworkService(tokenStorage: UserDefaultsStorage())
             )

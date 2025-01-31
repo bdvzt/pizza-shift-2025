@@ -6,7 +6,6 @@
 //
 
 import UIKit
-
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
@@ -19,8 +18,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         self.window = UIWindow(windowScene: windowScene)
         
+        //        let navController = UINavigationController()
+        //        let viewController = ViewController(viewModel: ViewController())
+        /*
+         let tokenStorage = UserDefaultsStorage()
+         let networkService = NetworkService(tokenStorage: tokenStorage)
+         let catalogRepository = CatalogRepositoryImpl(networkService: networkService)
+         let catalogUseCase = GetCatalogUseCaseImpl(repository: catalogRepository)
+         let viewController = ViewController2(catalogUseCase: catalogUseCase)
+         //        navController.pushViewController(viewController, animated: true)
+         
+         self.window?.rootViewController = UIHostingController(rootView: SwiftUIView())
+         self.window?.makeKeyAndVisible()
+         */
         let navController = UINavigationController()
-//        let viewController = ViewController(viewModel: ViewController())
+        //        let viewController = ViewController(viewModel: ViewController())
         let viewController = ViewController()
         navController.pushViewController(viewController, animated: true)
         

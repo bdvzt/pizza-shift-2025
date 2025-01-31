@@ -6,24 +6,20 @@
 //
 
 import UIKit
+import Kingfisher
 
-class PizzaCard: UIViewController
-{
+class PizzaCard: UITableViewCell {
     private let cardView = UIView()
-    private let pizzaImage = UIView()
+    private let pizzaImage = UIImageView()
     private let textView = UIView()
     
     private let pizzaName = UILabel()
     private let descriptionLabel = UILabel()
     private let price = UILabel()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         setUp()
-    }
-    
-    init() {
-        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
@@ -38,20 +34,19 @@ class PizzaCard: UIViewController
     }
     
     private func setUpCardView() {
-//        cardView.backgroundColor = .green
         cardView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(cardView)
+        contentView.addSubview(cardView)
         
         NSLayoutConstraint.activate([
-            cardView.topAnchor.constraint(equalTo: view.topAnchor, constant: 44),
-            cardView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            cardView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            cardView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+            cardView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            cardView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            cardView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
             cardView.heightAnchor.constraint(equalToConstant: 150)
         ])
     }
     
     private func setUpPizzaImage() {
-//        pizzaImage.backgroundColor = .red
         pizzaImage.translatesAutoresizingMaskIntoConstraints = false
         cardView.addSubview(pizzaImage)
         
@@ -64,7 +59,6 @@ class PizzaCard: UIViewController
     }
     
     private func setUpTextView() {
-//        textView.backgroundColor = .blue
         textView.translatesAutoresizingMaskIntoConstraints = false
         cardView.addSubview(textView)
         
@@ -77,17 +71,14 @@ class PizzaCard: UIViewController
     }
     
     private func setUpText() {
-        pizzaName.text = "Название"
         pizzaName.font = UIFont.boldSystemFont(ofSize: 18)
         pizzaName.translatesAutoresizingMaskIntoConstraints = false
         
-        descriptionLabel.text = "Описание пиццы."
         descriptionLabel.font = UIFont.systemFont(ofSize: 14)
         descriptionLabel.numberOfLines = 0
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        price.text = "300 рубЛЕЕЕЙ"
-        price.font = UIFont.systemFont(ofSize: 16)
+        price.font = UIFont.boldSystemFont(ofSize: 16)
         price.translatesAutoresizingMaskIntoConstraints = false
         
         textView.addSubview(pizzaName)
@@ -103,11 +94,23 @@ class PizzaCard: UIViewController
             descriptionLabel.leadingAnchor.constraint(equalTo: textView.leadingAnchor),
             descriptionLabel.trailingAnchor.constraint(equalTo: textView.trailingAnchor),
             
-            price.bottomAnchor.constraint(equalTo: textView.bottomAnchor, constant: 8),
+            price.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 8),
             price.leadingAnchor.constraint(equalTo: textView.leadingAnchor),
             price.trailingAnchor.constraint(equalTo: textView.trailingAnchor),
             price.bottomAnchor.constraint(equalTo: textView.bottomAnchor)
         ])
+    }
+    
+    func configure(with pizza: Pizza) {
+        pizzaName.text = pizza.name
+        descriptionLabel.text = pizza.description
+        price.text = "\(pizza.sizes.first?.price ?? 0) ₽"
+        
+        guard let url = URL(string: pizza.imageUrl) else { return }
+        
+        if let url = URL(string: pizza.imageUrl) {
+            pizzaImage.kf.setImage(with: url)
+        }
     }
 }
 

@@ -23,7 +23,7 @@ class CartViewController: UIViewController {
     }
     
     private func setUp() {
-        view.backgroundColor = .purple
+//        view.backgroundColor = .purple
     }
 }
 

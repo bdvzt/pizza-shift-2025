@@ -7,7 +7,8 @@
 
 import Foundation
 
-class DependencyInjection {
+class DependencyInjection
+{
     let tokenStorage: TokenStorageProtocol
     let networkService: NetworkServiceProtocol
     

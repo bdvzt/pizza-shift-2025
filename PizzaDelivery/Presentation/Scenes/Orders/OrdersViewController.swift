@@ -22,7 +22,7 @@ class OrdersViewController: UIViewController {
     }
     
     private func setUp() {
-        view.backgroundColor = .darkGray
+//        view.backgroundColor = .darkGray
     }
 }
 

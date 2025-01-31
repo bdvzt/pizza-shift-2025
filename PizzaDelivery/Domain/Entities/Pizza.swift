@@ -27,4 +27,8 @@ struct Pizza: Codable
     let isNew: Bool
     let isHit: Bool
     let img: String
+    
+    var imageUrl: String {
+        return Const.baseUrl + img
+    }
 }

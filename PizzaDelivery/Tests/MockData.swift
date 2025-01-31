@@ -63,4 +63,33 @@ struct MockData {
         ),
         phone: "89244527680"
     )
+    
+    static let pizzas = [Pizza(
+        id: "1",
+        name: "Двойной цыпленок",
+        ingredients: [
+            PizzaIngredient(name: .MOZZARELLA, cost: 100, img: "Pizza")
+        ],
+        toppings: [
+            PizzaIngredient(name: .MOZZARELLA, cost: 100, img: "Pizza")
+        ],
+        description: "Цыпленок, моцарелла, фирменный соус альфредо",
+        sizes: [
+            PizzaSize(name: .LARGE, price: 299)
+        ],
+        doughs: [
+            PizzaDough(name: .THICK, price: 100)
+        ],
+        calories: 250,
+        protein: "12g",
+        totalFat: "10g",
+        carbohydrates: "30g",
+        sodium: "500mg",
+        allergens: ["Лактоза", "Глютен"],
+        isVegetarian: true,
+        isGlutenFree: false,
+        isNew: false,
+        isHit: true,
+        img: "Pizza1"
+    )]
 }

@@ -12,4 +12,8 @@ struct PizzaIngredient: Codable
     let name: IngredientName
     let cost: Int
     let img: String
+    
+    var imageIngredientUrl: String {
+        return Const.baseUrl + img
+    }
 }

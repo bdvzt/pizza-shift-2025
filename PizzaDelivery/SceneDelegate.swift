@@ -14,10 +14,25 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         self.window = UIWindow(windowScene: windowScene)
         
-        let catalogViewController = CatalogViewController()
+        let catalogUseCase = GetCatalogUseCaseImpl(repository: CatalogRepositoryImpl(networkService: NetworkService(tokenStorage: UserDefaultsStorage())))
+        let catalogViewModel = CatalogViewModel(getCatalogUseCase: catalogUseCase)
+        
+        let catalogViewController = CatalogViewController(viewModel: catalogViewModel)
+        catalogViewController.title = "Пицца"
+        
         let ordersViewController = OrdersViewController()
+        ordersViewController.title = "Заказы"
+        
         let cartViewController = CartViewController()
+        cartViewController.title = "Корзина"
+        
         let profileViewController = ProfileViewController()
+        profileViewController.title = "Профиль"
+        
+        let catalogNavController = UINavigationController(rootViewController: catalogViewController)
+        let ordersNavController = UINavigationController(rootViewController: ordersViewController)
+        let cartNavController = UINavigationController(rootViewController: cartViewController)
+        let profileNavController = UINavigationController(rootViewController: profileViewController)
         
         let tabBarViewController = UITabBarController()
         
@@ -50,45 +65,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         tabBarViewController.tabBar.unselectedItemTintColor = UIColor(named: "TabBarNotSelected")
         
         tabBarViewController.setViewControllers([
-            catalogViewController,
-            ordersViewController,
-            cartViewController,
-            profileViewController
+            catalogNavController,
+            ordersNavController,
+            cartNavController,
+            profileNavController
         ], animated: true)
         
         self.window?.rootViewController = tabBarViewController
         self.window?.makeKeyAndVisible()
     }
-    
-    
-    //    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-    //        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-    //        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-    //        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-    //        guard let windowScene = (scene as? UIWindowScene) else { return }
-    //        self.window = UIWindow(windowScene: windowScene)
-    //
-    //        //        let navController = UINavigationController()
-    //        //        let viewController = ViewController(viewModel: ViewController())
-    //        /*
-    //         let tokenStorage = UserDefaultsStorage()
-    //         let networkService = NetworkService(tokenStorage: tokenStorage)
-    //         let catalogRepository = CatalogRepositoryImpl(networkService: networkService)
-    //         let catalogUseCase = GetCatalogUseCaseImpl(repository: catalogRepository)
-    //         let viewController = ViewController2(catalogUseCase: catalogUseCase)
-    //         //        navController.pushViewController(viewController, animated: true)
-    //
-    //         self.window?.rootViewController = UIHostingController(rootView: SwiftUIView())
-    //         self.window?.makeKeyAndVisible()
-    //         */
-    //        let navController = UINavigationController()
-    //        //        let viewController = ViewController(viewModel: ViewController())
-    //        let viewController = ViewController()
-    //        navController.pushViewController(viewController, animated: true)
-    //
-    //        self.window?.rootViewController = navController
-    //        self.window?.makeKeyAndVisible()
-    //    }
     
 }
 

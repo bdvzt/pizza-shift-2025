@@ -22,7 +22,7 @@ class ProfileViewController: UIViewController {
     }
     
     private func setUp() {
-        view.backgroundColor = .blue
+//        view.backgroundColor = .blue
     }
 }
 

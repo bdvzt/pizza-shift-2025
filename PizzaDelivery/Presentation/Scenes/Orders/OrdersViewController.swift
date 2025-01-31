@@ -1,13 +1,13 @@
 //
-//  CatalogViewController.swift
+//  OrdersViewController.swift
 //  PizzaDelivery
 //
-//  Created by Zayata Budaeva on 30.01.2025.
+//  Created by Zayata Budaeva on 31.01.2025.
 //
 
 import UIKit
 
-class CatalogViewController: UIViewController {
+class OrdersViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUp()
@@ -22,10 +22,10 @@ class CatalogViewController: UIViewController {
     }
     
     private func setUp() {
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .darkGray
     }
 }
 
 #Preview {
-    CatalogViewController()
+    OrdersViewController()
 }

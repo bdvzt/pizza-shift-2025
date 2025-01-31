@@ -79,7 +79,7 @@ class SizeComponent: UIViewController
     
     private func setUpButton(_ button: UIButton, title: String) {
         button.setTitle(title, for: .normal)
-        button.setTitleColor(.black, for: .normal)
+        button.setTitleColor(UIColor(named: "NotChosenSize"), for: .normal)
         button.layer.cornerRadius = 20
         button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
     }
@@ -90,7 +90,9 @@ class SizeComponent: UIViewController
     
     private func selectButton(_ button: UIButton) {
         selectedButton?.backgroundColor = UIColor(named: "PizzaSizeGray")
+        selectedButton?.setTitleColor( UIColor(named: "NotChosenSize"), for: .normal)
         button.backgroundColor = .white
+        button.setTitleColor(.black, for: .normal)
         selectedButton = button
     }
 }

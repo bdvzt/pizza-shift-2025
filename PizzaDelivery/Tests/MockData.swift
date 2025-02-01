@@ -32,7 +32,7 @@ struct MockData {
                 name: "string",
                 toppings: [
                     OrderedPizzaIngredient(
-                        name: .PINEAPPLE,
+                        name: .BACON,
                         cost: 0
                     )
                 ],

@@ -1,57 +1,52 @@
 //
-//  PizzaAndDescribtion.swift
+//  PizzaAndDescription.swift
 //  PizzaDelivery
 //
 //  Created by Zayata Budaeva on 31.01.2025.
 //
 
 import UIKit
+import Kingfisher
 
-class PizzaAndDescribtion: UIViewController
-{
+class PizzaAndDescription: UIView {
+    
     private let cardView = UIView()
-    private let pizzaImage = UIView()
+    private let pizzaImage = UIImageView()
     private let textView = UIView()
     
     private let pizzaName = UILabel()
     private let descriptionLabel = UILabel()
     private let ingredients = UILabel()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         setUp()
-    }
-    
-    init(){
-        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setUp(){
+    private func setUp() {
         setUpCardView()
         setUpImage()
         setUpTextView()
         setUpText()
     }
     
-    private func setUpCardView(){
-//        cardView.backgroundColor = .black
+    private func setUpCardView() {
         cardView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(cardView)
+        addSubview(cardView)
         
         NSLayoutConstraint.activate([
-            cardView.topAnchor.constraint(equalTo: view.topAnchor, constant: 44),
-            cardView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            cardView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            cardView.heightAnchor.constraint(equalToConstant: 370)
+            cardView.topAnchor.constraint(equalTo: topAnchor, constant: 44),
+            cardView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            cardView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
         ])
     }
     
-    private func setUpImage(){
-//        pizzaImage.backgroundColor = .systemPink
+    private func setUpImage() {
+        pizzaImage.contentMode = .scaleAspectFit
         pizzaImage.translatesAutoresizingMaskIntoConstraints = false
         cardView.addSubview(pizzaImage)
         
@@ -63,8 +58,7 @@ class PizzaAndDescribtion: UIViewController
         ])
     }
     
-    private func setUpTextView(){
-//        textView.backgroundColor = .darkGray
+    private func setUpTextView() {
         textView.translatesAutoresizingMaskIntoConstraints = false
         cardView.addSubview(textView)
         
@@ -76,17 +70,14 @@ class PizzaAndDescribtion: UIViewController
         ])
     }
     
-    private func setUpText(){
-        pizzaName.text = "Название"
+    private func setUpText() {
         pizzaName.font = UIFont.boldSystemFont(ofSize: 24)
         pizzaName.translatesAutoresizingMaskIntoConstraints = false
         
-        descriptionLabel.text = "30 см, традиционное тесто"
         descriptionLabel.font = UIFont.systemFont(ofSize: 14)
         descriptionLabel.numberOfLines = 0
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        ingredients.text = "Цыпленок, моцарелла"
         ingredients.font = UIFont.systemFont(ofSize: 16)
         ingredients.numberOfLines = 0
         ingredients.translatesAutoresizingMaskIntoConstraints = false
@@ -109,8 +100,20 @@ class PizzaAndDescribtion: UIViewController
             ingredients.trailingAnchor.constraint(equalTo: textView.trailingAnchor)
         ])
     }
-}
-
-#Preview{
-    PizzaAndDescribtion()
+    
+    func configure(with pizza: Pizza) {
+        pizzaName.text = pizza.name
+        descriptionLabel.text = pizza.description
+        var localizedIngredients = pizza.ingredients.map { translateIngredient(ingredient: $0.name.rawValue) }
+        
+        if let first = localizedIngredients.first {
+            localizedIngredients[0] = first.prefix(1).uppercased() + first.dropFirst()
+        }
+        
+        ingredients.text = localizedIngredients.joined(separator: ", ")
+        
+        if let url = URL(string: pizza.imageUrl) {
+            pizzaImage.kf.setImage(with: url)
+        }
+    }
 }

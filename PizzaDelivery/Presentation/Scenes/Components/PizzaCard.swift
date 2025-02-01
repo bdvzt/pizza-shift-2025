@@ -20,6 +20,8 @@ class PizzaCard: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setUp()
+        selectionStyle = .none
+        backgroundColor = .clear
     }
     
     required init?(coder: NSCoder) {

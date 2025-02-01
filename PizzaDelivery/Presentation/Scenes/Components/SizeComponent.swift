@@ -7,9 +7,8 @@
 
 import UIKit
 
-class SizeComponent: UIViewController
-{
-    private let sizeView = UIView()
+class SizeComponent: UIView {
+    
     private let stackView = UIStackView()
     
     private let smallSizeButton = UIButton()
@@ -18,13 +17,9 @@ class SizeComponent: UIViewController
     
     private var selectedButton: UIButton?
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         setUp()
-    }
-    
-    init() {
-        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
@@ -32,37 +27,23 @@ class SizeComponent: UIViewController
     }
     
     private func setUp() {
-        setUpSizeView()
-        setUpStackView()
-        setUpButtons()
-    }
-    
-    private func setUpSizeView() {
-        sizeView.backgroundColor = UIColor(named: "PizzaSizeGray")
-        sizeView.layer.cornerRadius = 20
-        sizeView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(sizeView)
+        self.backgroundColor = UIColor(named: "PizzaSizeGray")
+        self.layer.cornerRadius = 20
         
-        NSLayoutConstraint.activate([
-            sizeView.topAnchor.constraint(equalTo: view.topAnchor, constant: 300),
-            sizeView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            sizeView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            sizeView.heightAnchor.constraint(equalToConstant: 50)
-        ])
-    }
-    
-    private func setUpStackView() {
         stackView.axis = .horizontal
         stackView.distribution = .fillEqually
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        sizeView.addSubview(stackView)
+        
+        self.addSubview(stackView)
         
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: sizeView.topAnchor, constant: 2),
-            stackView.leadingAnchor.constraint(equalTo: sizeView.leadingAnchor, constant: 2),
-            stackView.trailingAnchor.constraint(equalTo: sizeView.trailingAnchor, constant: -2),
-            stackView.bottomAnchor.constraint(equalTo: sizeView.bottomAnchor, constant: -2)
+            stackView.topAnchor.constraint(equalTo: self.topAnchor, constant: 2),
+            stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 2),
+            stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -2),
+            stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -2)
         ])
+        
+        setUpButtons()
     }
     
     private func setUpButtons() {
@@ -81,6 +62,7 @@ class SizeComponent: UIViewController
         button.setTitle(title, for: .normal)
         button.setTitleColor(UIColor(named: "NotChosenSize"), for: .normal)
         button.layer.cornerRadius = 20
+        button.backgroundColor = UIColor(named: "PizzaSizeGray")
         button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
     }
     
@@ -90,13 +72,10 @@ class SizeComponent: UIViewController
     
     private func selectButton(_ button: UIButton) {
         selectedButton?.backgroundColor = UIColor(named: "PizzaSizeGray")
-        selectedButton?.setTitleColor( UIColor(named: "NotChosenSize"), for: .normal)
+        selectedButton?.setTitleColor(UIColor(named: "NotChosenSize"), for: .normal)
+        
         button.backgroundColor = .white
         button.setTitleColor(.black, for: .normal)
         selectedButton = button
     }
-}
-
-#Preview {
-    SizeComponent()
 }

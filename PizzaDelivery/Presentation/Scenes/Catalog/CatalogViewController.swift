@@ -30,6 +30,7 @@ class CatalogViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.delegate = self
         tableView.dataSource = self
         tableView.register(PizzaCard.self, forCellReuseIdentifier: "PizzaCard")
         
@@ -70,7 +71,10 @@ extension CatalogViewController: UITableViewDataSource {
     }
 }
 
-
-//#Preview{
-//    CatalogViewController(viewModel: viewModel)
-//}
+extension CatalogViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedPizza = viewModel.pizzas[indexPath.row]
+        let pizzaViewController = PizzaViewController(pizza: selectedPizza)
+        navigationController?.pushViewController(pizzaViewController, animated: true)
+    }
+}
